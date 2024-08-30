@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,15 +7,14 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Linking,
-  
+  ScrollView
 } from "react-native";
-import {Stack} from "expo-router";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { Stack } from "expo-router";
+import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-import ScreenHeaderBtn from "../../components/header/ScreenHeaderBtn";
-// Custom hook to fetch article by ID
-const useFetchArticleById = (title) => {
-  const router = useRouter()
+//import { ScrollView } from "react-native-gesture-handler";
+
+const useFetchArticleByTitle = (title) => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,10 +23,19 @@ const useFetchArticleById = (title) => {
     const fetchArticle = async () => {
       try {
         const response = await fetch(
-          'https://gnews.io/api/v4/top-headlines?lang=en&country=us&apikey=84f0fd6a8faaf6850048a210745568f9'
+          "https://gnews.io/api/v4/top-headlines?lang=en&country=us&apikey=84f0fd6a8faaf6850048a210745568f9"
         );
         const data = await response.json();
-        const foundArticle = data.articles?.find((item) => item?.title === title);
+
+        // Create a regular expression from the decoded title
+        const decodedTitle = decodeURIComponent(title).replace(/[-+]/g, " ");
+        const titleRegex = new RegExp(decodedTitle, "i"); // "i" flag for case-insensitive matching
+
+        // Find the article using the regex
+        const foundArticle = data.articles?.find((item) =>
+          titleRegex.test(item?.title)
+        );
+
         setArticle(foundArticle);
       } catch (err) {
         setError(err);
@@ -43,8 +51,17 @@ const useFetchArticleById = (title) => {
 };
 
 const NewsDetails = () => {
-  const { articleTitle } = useLocalSearchParams(); // Get the articleId from the URL params
-  const { article, loading, error } = useFetchArticleById(articleTitle);
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+
+  // Parse URL to get the title
+  useEffect(() => {
+    const url = new URL(window.location.href); // Get current URL
+    const titleParam = url.searchParams.get("title");
+    setTitle(titleParam ? decodeURIComponent(titleParam) : "");
+  }, []);
+
+  const { article, loading, error } = useFetchArticleByTitle(title);
 
   if (loading) {
     return (
@@ -71,6 +88,7 @@ const NewsDetails = () => {
   const handleReadMore = () => {
     Linking.openURL(article.url);
   };
+
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -82,6 +100,7 @@ const NewsDetails = () => {
     };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -104,7 +123,7 @@ const NewsDetails = () => {
             />
           ),
           headerRight: () => (
-            <TouchableOpacity >
+            <TouchableOpacity>
               <Image
                 source={require("../../assets/icons/bookmark.png")}
                 style={styles.headerRightIcon}
@@ -127,7 +146,7 @@ const NewsDetails = () => {
         <Text>{article.source.name}</Text>
         <Text>{formatDate(article.publishedAt)}</Text>
       </View>
-      <View style={styles.contentContainer}>
+      <ScrollView style={styles.contentContainer}>
         <Text style={styles.content}>{article.content}</Text>
         <LinearGradient
           colors={["transparent", "#FFF"]}
@@ -135,7 +154,7 @@ const NewsDetails = () => {
         />
         <TouchableOpacity style={styles.button} onPress={handleReadMore}>
           <LinearGradient
-            colors={["#E30101", "#FF6B00"]} // Orange to yellow
+            colors={["#E30101", "#FF6B00"]} 
             start={{ x: 0.5, y: 0 }}
             end={{ x: 0.5, y: 1 }}
             style={styles.btngradient}
@@ -143,7 +162,7 @@ const NewsDetails = () => {
             <Text style={styles.buttonText}>Read More</Text>
           </LinearGradient>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -212,7 +231,7 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
     overflow: "hidden",
-    top: 178,
+    top: 90,
 
     position: "absolute",
     width: "100%",
@@ -242,8 +261,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 40,
-    marginLeft:'50px',
+    marginLeft: "50px",
   },
 });
-
 export default NewsDetails;

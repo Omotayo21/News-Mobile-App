@@ -94,7 +94,11 @@ const Welcome = () => {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.container}
-                  onPress={() => router.push(`/full-details/${item.title}`)}
+                  onPress={() =>
+                    router.push(
+                      `/full-details/full-details?title=${encodeURIComponent(item.title)}`
+                    )
+                  } // URL Encoding
                 >
                   <ImageBackground
                     source={{ uri: item.image }}
@@ -104,10 +108,9 @@ const Welcome = () => {
                     <View style={styles.textContainer}>
                       <View style={styles.header}>
                         <Image
-                          source={require("../../assets/icons/Floxx news.png")} 
+                          source={require("../../assets/icons/Floxx news.png")}
                           style={styles.headerImage}
                         />
-                       
                       </View>
                       <Text style={styles.headlineText}>{item.title}</Text>
                     </View>
@@ -118,7 +121,7 @@ const Welcome = () => {
             />
           )
         ) : (
-          ""
+          <Text style={styles.noSelectionText}>Please select a category.</Text>
         )}
       </View>
     </View>
@@ -126,7 +129,6 @@ const Welcome = () => {
 };
 
 export default Welcome;
-
 const styles = StyleSheet.create({
   title: {
     fontFamily: "Times New Roman",
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     resizeMode: "cover",
     width: "100%",
-    height:'300px'
+    height: "300px",
   },
   iconContainer: {
     position: "absolute",
@@ -201,11 +203,10 @@ const styles = StyleSheet.create({
   },
   newsListContainer: {
     marginTop: 1,
-    marginBottom:'-100px'
+    marginBottom: "-100px",
   },
   newsList: {
     paddingHorizontal: 1,
-    
   },
   newsCard: {
     marginBottom: 16,
