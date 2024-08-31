@@ -49,11 +49,13 @@ const NewsCard = ({ article, onPress }) => (
 );
 
 const NewsList = () => {
-  const { data, loading, error } = useFetchNews();
+  const { data: newsData, loading, error } = useFetchNews('general');
   const router = useRouter();
 
-  const handlePress = (article) => {
-    router.push(`/full-details/${article.id}`);
+  const handlePress = () => {
+    router.push(
+      `/full-details/full-details?title=${encodeURIComponent(item.title)}`
+    );
   };
 
   if (loading) return <ActivityIndicator size="large" color="#FFA500" />;
@@ -61,8 +63,8 @@ const NewsList = () => {
 
   return (
     <FlatList
-      data={data}
-      keyExtractor={(item) => item.title} // Assuming title is unique
+      data={newsData}
+      keyExtractor={(item) => item.publishedAt} // Assuming title is unique
       renderItem={({ item }) => (
         <NewsCard article={item} onPress={() => handlePress(item)} />
       )}

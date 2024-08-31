@@ -4,79 +4,85 @@ import { Stack } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView } from "react-native-gesture-handler";
 import { useRouter } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 const { width, height } = Dimensions.get("window");
 const NextPage = () => {
 
   const router = useRouter()
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <ImageBackground
-        source={require("../assets/images/bg.png")}
-        style={{
-          flex: 1,
-          width: "100%",
-          height: "100%",
-          padding: width * 0.02,
-          justifyContent: "center",
-        }}
-      >
-        <Stack.Screen
-          options={{
-            headerShown: false,
+    <GestureHandlerRootView>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ImageBackground
+          source={require("../assets/images/bg.png")}
+          style={{
+            flex: 1,
+            width: "100%",
+            height: "100%",
+            padding: width * 0.02,
+            justifyContent: "center",
           }}
-        />
-        <View style={styles.hexagon}>
-          <Image
-            source={require("../assets/images/Rectangle 20.png")}
-            style={[styles.image, styles.image2]}
-          />
-          <Image
-            source={require("../assets/images/Rectangle 21.png")}
-            style={[styles.image, styles.image6]}
-          />
-          <Image
-            source={require("../assets/images/Rectangle 22.png")}
-            style={[styles.image, styles.image3]}
-          />
-          <Image
-            source={require("../assets/images/Rectangle 18.png")}
-            style={[styles.image, styles.image1]}
-          />
-          <Image
-            source={require("../assets/images/Rectangle 6.png")}
-            style={[styles.image, styles.image5]}
-          />
-          <Image
-            source={require("../assets/images/Rectangle 4.png")}
-            style={[styles.image, styles.image4]}
-          />
-        </View>
-        <View style={{ flex: 1, marginLeft: "4px", marginTop: "36px" }}>
-          <Image source={require("../assets/icons/Floxx.png")} />
-          <Text
-            style={{
-              fontSize: 46,
-              fontWeight: "bold",
-              fontFamily: "Times New Roman",
-              paddingTop: "7px",
+        >
+          <Stack.Screen
+            options={{
+              headerShown: false,
             }}
+          />
+          <View style={styles.hexagon}>
+            <Image
+              source={require("../assets/images/Rectangle 20.png")}
+              style={[styles.image, styles.image2]}
+            />
+            <Image
+              source={require("../assets/images/Rectangle 21.png")}
+              style={[styles.image, styles.image6]}
+            />
+            <Image
+              source={require("../assets/images/Rectangle 22.png")}
+              style={[styles.image, styles.image3]}
+            />
+            <Image
+              source={require("../assets/images/Rectangle 18.png")}
+              style={[styles.image, styles.image1]}
+            />
+            <Image
+              source={require("../assets/images/Rectangle 6.png")}
+              style={[styles.image, styles.image5]}
+            />
+            <Image
+              source={require("../assets/images/Rectangle 4.png")}
+              style={[styles.image, styles.image4]}
+            />
+          </View>
+          <View style={{ flex: 1, marginLeft: "4px", marginTop: "36px" }}>
+            <Image source={require("../assets/icons/Floxx.png")} />
+            <Text
+              style={{
+                fontSize: 46,
+                fontWeight: "bold",
+                fontFamily: "Times New Roman",
+                paddingTop: "7px",
+              }}
+            >
+              News from all over the world
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push("/dashboard")}
           >
-            News from all over the world
-          </Text>
-        </View>
-        <TouchableOpacity style={styles.button} onPress={() => router.push('/dashboard')}>
-          <LinearGradient
-            colors={["#E30101", "#FF6B00"]} // Orange to yellow
-            start={{ x: 0.5, y: 0 }}
-            end={{ x: 0.5, y: 1 }}
-            style={styles.gradient}
-          >
-            <Text style={styles.buttonText}>Continue</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </ImageBackground>
-    </ScrollView>
+            <LinearGradient
+              colors={["#E30101", "#FF6B00"]} // Orange to yellow
+              start={{ x: 0.5, y: 0 }}
+              end={{ x: 0.5, y: 1 }}
+              style={styles.gradient}
+            >
+              <Text style={styles.buttonText}>Continue</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </ImageBackground>
+      </ScrollView>
+    </GestureHandlerRootView>
   );
 };
 
@@ -85,7 +91,7 @@ const styles = StyleSheet.create({
     width:400,
     height: 400,
     position: "relative",
-    marginTop: "110px",
+    marginTop: "120px",
     alignSelf: 'center'
   },
   image: {

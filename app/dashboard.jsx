@@ -62,14 +62,15 @@ const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
     backgroundColor: "#ffffff",
+   paddingLeft: 20,
   },
   scrollViewContent: {
-    paddingHorizontal: width * 0.05,
+    paddingHorizontal: width * 0.02,
     paddingBottom: 100, // Add space for the bottom navbar
   },
   btnContainer: {
     width: 80,
-    height: 40,
+    height: 20,
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 20,

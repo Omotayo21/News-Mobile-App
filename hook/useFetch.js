@@ -13,12 +13,10 @@ const useFetchNews = (category) => {
         );
         const result = await response.json();
 
-        // Sort articles by published date
-        const sortedArticles = result.articles.sort(
-          (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
-        );
+        
 
-        setData(sortedArticles);
+        setData(result.articles);
+        setLoading(false)
       } catch (err) {
         setError(err.message);
       } finally {

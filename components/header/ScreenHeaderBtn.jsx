@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     gap:"10px",
     justifyContent: "center",
     alignItems: "center",
-    marginRight:'20px',
+
   },
   btnImg: {
     width: 40,
