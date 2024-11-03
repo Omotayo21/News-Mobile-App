@@ -66,7 +66,7 @@ const NewsList = () => {
       data={newsData}
       keyExtractor={(item) => item.publishedAt} // Assuming title is unique
       renderItem={({ item }) => (
-        <NewsCard article={item} onPress={() => handlePress(item)} />
+        <NewsCard article={item}  />
       )}
       contentContainerStyle={styles.list}
     />
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 5,
     paddingVertical: 18,
-    marginBottom: 26,
+    marginBottom: 6,
     backgroundColor: "#fff",
     borderBottomColor: 'gray',
     borderBottomWidth:2

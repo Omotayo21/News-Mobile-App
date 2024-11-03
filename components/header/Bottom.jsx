@@ -49,8 +49,8 @@ const BottomNavBar = () => {
 
 const styles = StyleSheet.create({
   navbar: {
-    position: "absolute",
-    bottom: 0,
+    position: "fixed",
+    bottom: 10,
     left: 0,
     right: 0,
     height: 10,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#ffffff',
     marginHorizontal:'20px',
     width:'100%',
-    paddingVertical:'2px',
+    paddingVertical:'25px',
     paddingHorizontal:'2px'
   
   },
